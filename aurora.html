@@ -193,7 +193,7 @@
             document.getElementById('main-container').style.display = 'none';
             document.getElementById('widget-container').style.display = 'none';
             document.getElementById('ratings-container').style.display = 'flex';
-            loadRatings();
+            loadRatings();  // Load the ratings when the page is first loaded
         }
 
         async function submitRating(event) {
@@ -212,7 +212,7 @@
 
             if (response.ok) {
                 alert('Rating submitted successfully!');
-                loadRatings();
+                loadRatings();  // Refresh the ratings list after submitting a new rating
             } else {
                 alert('Failed to submit rating. Please try again.');
             }
@@ -224,13 +224,18 @@
             });
             const ratings = await response.json();
             const ratingList = document.getElementById('ratings-list');
-            ratingList.innerHTML = '';
-            ratings.forEach(rating => {
-                const ratingDiv = document.createElement('div');
-                ratingDiv.className = 'rating';
-                ratingDiv.innerHTML = `<img src="${rating.avatar}" alt="Avatar"> <p>${rating.stars} - ${rating.text}</p>`;
-                ratingList.appendChild(ratingDiv);
-            });
+            ratingList.innerHTML = '';  // Clear the existing list
+
+            if (ratings.length > 0) {
+                ratings.forEach(rating => {
+                    const ratingDiv = document.createElement('div');
+                    ratingDiv.className = 'rating';
+                    ratingDiv.innerHTML = `<img src="${rating.avatar}" alt="Avatar"> <p>${rating.stars} - ${rating.text}</p>`;
+                    ratingList.appendChild(ratingDiv);
+                });
+            } else {
+                ratingList.innerHTML = '<p>No ratings yet.</p>';
+            }
         }
     </script>
 </body>
