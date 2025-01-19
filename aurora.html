@@ -16,46 +16,15 @@
             overflow: hidden;
         }
 
-        .center-content {
-            text-align: center;
-            position: relative;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .join-btn {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            background-color: #ff5e57;
-            border: none;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .join-btn:hover {
-            background-color: #ff3c2d;
-        }
-
         .sidebar {
             position: fixed;
-            left: 0;
             top: 0;
+            left: 0;
             width: 250px;
-            height: 100%;
             background-color: #333;
             padding: 20px;
-            transition: left 0.3s;
-            z-index: 999;
+            z-index: 1000;
+            height: 100%;
             display: flex;
             flex-direction: column;
         }
@@ -74,28 +43,8 @@
             background-color: #575757;
         }
 
-        .sidebar .sections {
+        .sections {
             margin-bottom: 20px;
-        }
-
-        .sidebar-toggle {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-            color: white;
-            background: #333;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        iframe {
-            width: 100%;
-            border: none;
-            border-radius: 10px;
         }
 
         .section {
@@ -107,93 +56,68 @@
         .home-section {
             display: block;
             text-align: center;
+            margin-top: 100px;
         }
 
-        .form-section input, .form-section textarea, .form-section select,
-        .rate-form-section input, .rate-form-section textarea, .rate-form-section select {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background-color: #222;
+        .join-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background-color: #ff5e57;
+            border: none;
             color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
 
-        .form-section textarea, .rate-form-section textarea {
-            height: 150px;
-            resize: none;
+        .join-btn:hover {
+            background-color: #ff3c2d;
         }
 
-        .appeal-section {
-            text-align: center;
-            margin-top: 50px;
+        iframe {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
         }
 
-        .admin-support-section {
-            margin-top: 50px;
-            text-align: center;
+        /* Sidebar toggle button for small screens */
+        .sidebar-toggle {
+            display: none;
         }
 
-        .admin-support-profile {
-            margin-bottom: 20px;
-        }
-
-        .admin-support-profile img {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-
-        .admin-support-profile h3 {
-            font-size: 1.5rem;
-            margin: 5px 0;
-        }
-
-        .admin-support-profile p {
-            font-size: 1rem;
-            margin: 5px 0;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -50%) translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, -50%) translateY(0);
-            }
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
                 left: -250px;
                 width: 100%;
+                height: auto;
+                position: absolute;
+                top: 0;
+                padding: 10px;
+                transition: left 0.3s ease;
             }
 
             .sidebar.open {
                 left: 0;
             }
 
-            .center-content {
-                position: static;
-                transform: none;
-                text-align: center;
-                margin: 20px 0;
+            .sidebar-toggle {
+                display: block;
+                font-size: 2rem;
+                color: white;
+                background-color: #333;
+                padding: 10px;
+                border-radius: 50%;
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+                z-index: 9999;
             }
 
             .section {
                 margin-left: 0;
-            }
-
-            .sidebar-toggle {
-                display: block;
-            }
-
-            .sidebar a {
-                text-align: center;
             }
         }
     </style>
@@ -216,12 +140,10 @@
 
     <!-- Home Section -->
     <div id="home-section" class="section home-section">
-        <div class="center-content">
-            <h1>Aurora VIP ⭐ | fisch</h1>
-            <a href="https://discord.gg/ZNrzQd3URH" target="_blank">
-                <button class="join-btn">Join Now</button>
-            </a>
-        </div>
+        <h1>Aurora VIP ⭐ | fisch</h1>
+        <a href="https://discord.gg/ZNrzQd3URH" target="_blank">
+            <button class="join-btn">Join Now</button>
+        </a>
     </div>
 
     <!-- Widget Section -->
@@ -231,54 +153,19 @@
     </div>
 
     <!-- Admin Support Section -->
-    <div id="admin-support-section" class="section admin-support-section">
+    <div id="admin-support-section" class="section">
         <h2>Admin Support</h2>
-        <div class="admin-support-profile">
-            <img src="https://cdn.discordapp.com/avatars/1080940869902925998/a_3013460937f9181e699064f1aad2bc2c.gif?size=1024" alt="2K">
-            <h3>Owner</h3>
-            <p>The End of Times</p>
-        </div>
-        <div class="admin-support-profile">
-            <img src="https://cdn.discordapp.com/avatars/948168624059875369/814d27c453abca2fe6f827a560aad06e.png?size=1024" alt="The End of Times">
-            <h3>Co-Owner</h3>
-            <p>White Hand</p>
-        </div>
-        <div class="admin-support-profile">
-            <img src="https://cdn.discordapp.com/avatars/1312757012781862973/2836a8266a4e5bf4d44bd15a50b47577.png?size=1024" alt="Bravinch">
-            <h3>Admin Chef</h3>
-            <p>Bravinch</p>
-        </div>
-        <div class="admin-support-profile">
-            <img src="https://images-ext-1.discordapp.net/external/IJNH0xaqkLz8b6MTdH8WOaQ-wVklQGBzj1Ez-rJItOA/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1118859033814769765/30e1dc767ceccd035026aba58dba62b9.png?format=webp&quality=lossless&width=644&height=644" alt="Dev_Teq">
-            <h3>Admin</h3>
-            <p>Dev_Teq</p>
-        </div>
-        <div class="admin-support-profile">
-            <img src="https://cdn.discordapp.com/avatars/1118859033814769765/30e1dc767ceccd035026aba58dba62b9.png?size=1024" alt="Lord">
-            <h3>Lord</h3>
-            <p>Lord</p>
-        </div>
+        <!-- Your admin support content here -->
     </div>
 
     <!-- Rate Us Section -->
-    <div id="rate-us-section" class="section rate-us-section">
+    <div id="rate-us-section" class="section">
         <h2>Rate Us</h2>
-        <form id="rateForm">
-            <input type="text" name="username" placeholder="Username" required><br>
-            <textarea name="feedback" placeholder="Your feedback" required></textarea><br>
-            <select name="rating">
-                <option value="1">1 Star</option>
-                <option value="2">2 Stars</option>
-                <option value="3">3 Stars</option>
-                <option value="4">4 Stars</option>
-                <option value="5">5 Stars</option>
-            </select><br>
-            <button type="submit" class="join-btn">Submit Feedback</button>
-        </form>
+        <!-- Your rate us content here -->
     </div>
 
     <!-- Appeal Section -->
-    <div id="appeal-section" class="section appeal-section">
+    <div id="appeal-section" class="section">
         <h2>Appeal</h2>
         <p>Join Aurora VIP to appeal</p>
         <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
@@ -287,23 +174,9 @@
     </div>
 
     <!-- Apply Section -->
-    <div id="apply-section" class="section apply-section">
+    <div id="apply-section" class="section">
         <h2>Apply for a Role</h2>
-        <form id="applyForm">
-            <input type="text" name="username" placeholder="Username" required><br>
-            <input type="text" name="joindate" placeholder="Join Date of Server" required><br>
-            <select name="role" required>
-                <option value="Mod">Mod</option>
-                <option value="Admin">Admin</option>
-                <option value="Partner Manager">Partner Manager</option>
-                <option value="Aurora Hoster">Aurora Hoster</option>
-                <option value="Giveaway Maker">Giveaway Maker</option>
-                <option value="Mod 2">Mod 2</option>
-                <option value="Middleman">Middleman</option>
-            </select><br>
-            <textarea name="reason" placeholder="Why do you want to be an admin? (at least 250 characters)" required></textarea><br>
-            <button type="submit" class="join-btn">Apply Now</button>
-        </form>
+        <!-- Your apply content here -->
     </div>
 
     <script>
@@ -321,7 +194,7 @@
             document.getElementById(sectionId).style.display = 'block';
         }
 
-        // Default show home section
+        // Default to show the home section
         showSection('home-section');
     </script>
 
