@@ -89,7 +89,7 @@
             top: 20px;
             left: 20px;
             font-size: 1.5rem;
-            color: white;
+            color: black; /* Set the color to black */
             cursor: pointer;
             z-index: 1100;
         }
@@ -157,7 +157,6 @@
     <div class="ratings-container" id="ratings-container">
         <h1>Ratings Section</h1>
         <div class="ratings-form">
-            <button onclick="redirectToAuthorize()">Authorize with Discord</button>
             <form id="rating-form" onsubmit="submitRating(event)">
                 <select id="rating-stars" required>
                     <option value="">Select Rating</option>
@@ -195,10 +194,6 @@
             document.getElementById('widget-container').style.display = 'none';
             document.getElementById('ratings-container').style.display = 'flex';
             loadRatings();
-        }
-
-        function redirectToAuthorize() {
-            window.location.href = `${backendUrl}/aurora.html`;
         }
 
         async function submitRating(event) {
