@@ -49,7 +49,7 @@
 
         .sidebar {
             position: fixed;
-            left: -250px;
+            left: 0;
             top: 0;
             width: 250px;
             height: 100%;
@@ -57,6 +57,8 @@
             padding: 20px;
             transition: left 0.3s;
             z-index: 999;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar a {
@@ -160,6 +162,37 @@
                 transform: translate(-50%, -50%) translateY(0);
             }
         }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                left: -250px;
+                width: 100%;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .center-content {
+                position: static;
+                transform: none;
+                text-align: center;
+                margin: 20px 0;
+            }
+
+            .section {
+                margin-left: 0;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .sidebar a {
+                text-align: center;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -269,11 +302,7 @@
     <script>
         function toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
-            if (sidebar.style.left === '0px') {
-                sidebar.style.left = '-250px';
-            } else {
-                sidebar.style.left = '0px';
-            }
+            sidebar.classList.toggle('open');
         }
 
         function showSection(sectionId) {
