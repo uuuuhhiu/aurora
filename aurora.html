@@ -157,7 +157,7 @@
     <div class="ratings-container" id="ratings-container">
         <h1>Ratings Section</h1>
         <div class="ratings-form">
-            <a href="https://discord.com/oauth2/authorize?client_id=1330617833775960065&response_type=code&redirect_uri=https%3A%2F%2Fauroravip.onrender.com&scope=identify" target="_blank">Authorize with Discord</a>
+            <button onclick="redirectToAuthorize()">Authorize with Discord</button>
             <form id="rating-form" onsubmit="submitRating(event)">
                 <select id="rating-stars" required>
                     <option value="">Select Rating</option>
@@ -177,6 +177,8 @@
     </div>
 
     <script>
+        const backendUrl = 'https://auroravip.onrender.com'; // Update with your backend URL
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
@@ -192,21 +194,48 @@
             document.getElementById('main-container').style.display = 'none';
             document.getElementById('widget-container').style.display = 'none';
             document.getElementById('ratings-container').style.display = 'flex';
+            loadRatings();
         }
 
-        function submitRating(event) {
+        function redirectToAuthorize() {
+            window.location.href = `${backendUrl}/authorize`;
+        }
+
+        async function submitRating(event) {
             event.preventDefault();
             const stars = document.getElementById('rating-stars').value;
             const text = document.getElementById('rating-text').value;
 
-            // Replace this with your backend integration for storing data
-            console.log(`Rating submitted: ${stars} stars, ${text}`);
+            const response = await fetch(`${backendUrl}/submit-rating`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ stars, text }),
+                credentials: 'include',
+            });
 
+            if (response.ok) {
+                alert('Rating submitted successfully!');
+                loadRatings();
+            } else {
+                alert('Failed to submit rating. Please try again.');
+            }
+        }
+
+        async function loadRatings() {
+            const response = await fetch(`${backendUrl}/ratings`, {
+                method: 'GET',
+            });
+            const ratings = await response.json();
             const ratingList = document.getElementById('ratings-list');
-            const newRating = document.createElement('div');
-            newRating.className = 'rating';
-            newRating.innerHTML = `<p>${stars} - ${text}</p>`;
-            ratingList.appendChild(newRating);
+            ratingList.innerHTML = '';
+            ratings.forEach(rating => {
+                const ratingDiv = document.createElement('div');
+                ratingDiv.className = 'rating';
+                ratingDiv.innerHTML = `<img src="${rating.avatar}" alt="Avatar"> <p>${rating.stars} - ${rating.text}</p>`;
+                ratingList.appendChild(ratingDiv);
+            });
         }
     </script>
 </body>
