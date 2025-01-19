@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aurora VIP</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('0de0d6b7f8fab17d66c016ff641be9a5.webp') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .join-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .join-button:hover {
+            background-color: #45a049;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transition: left 0.3s;
+            z-index: 1000;
+            color: white;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .sidebar ul li:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .menu-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .widget-container, .ratings-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+        }
+
+        .widget-container iframe {
+            margin-top: 20px;
+        }
+
+        .ratings-form {
+            margin-top: 20px;
+        }
+
+        .ratings-form select, .ratings-form textarea, .ratings-form button {
+            margin: 10px 0;
+        }
+
+        .ratings-list {
+            margin-top: 20px;
+        }
+
+        .rating {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .rating img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-toggle" onclick="toggleSidebar()">&#9776;</div>
+    <div class="sidebar" id="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li onclick="showRatings()">Ratings</li>
+            <li onclick="showWidget()">Widget</li>
+            <li onclick="alert('Admin Support Section')">Admin Support</li>
+        </ul>
+    </div>
+    <div class="container" id="main-container">
+        <h1>Welcome to Aurora VIP</h1>
+        <a class="join-button" href="https://discord.gg/ZNrzQd3URH" target="_blank">Join</a>
+    </div>
+    <div class="widget-container" id="widget-container">
+        <h1>Widget Section</h1>
+        <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    </div>
+    <div class="ratings-container" id="ratings-container">
+        <h1>Ratings Section</h1>
+        <div class="ratings-form">
+            <a href="https://discord.com/oauth2/authorize?client_id=1330617833775960065&response_type=code&redirect_uri=https%3A%2F%2Fdiscord.gg%2FZNrzQd3URH&scope=identify" target="_blank">Authorize with Discord</a>
+            <form id="rating-form" onsubmit="submitRating(event)">
+                <select id="rating-stars" required>
+                    <option value="">Select Rating</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
+                <textarea id="rating-text" placeholder="Write your review here..." required></textarea>
+                <button type="submit">Submit Rating</button>
+            </form>
+        </div>
+        <div class="ratings-list" id="ratings-list">
+            <!-- Ratings will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function showWidget() {
+            document.getElementById('main-container').style.display = 'none';
+            document.getElementById('ratings-container').style.display = 'none';
+            document.getElementById('widget-container').style.display = 'flex';
+        }
+
+        function showRatings() {
+            document.getElementById('main-container').style.display = 'none';
+            document.getElementById('widget-container').style.display = 'none';
+            document.getElementById('ratings-container').style.display = 'flex';
+        }
+
+        function submitRating(event) {
+            event.preventDefault();
+            const stars = document.getElementById('rating-stars').value;
+            const text = document.getElementById('rating-text').value;
+
+            // Replace this with your backend integration for storing data
+            console.log(`Rating submitted: ${stars} stars, ${text}`);
+
+            const ratingList = document.getElementById('ratings-list');
+            const newRating = document.createElement('div');
+            newRating.className = 'rating';
+            newRating.innerHTML = `<p>${stars} - ${text}</p>`;
+            ratingList.appendChild(newRating);
+        }
+    </script>
+</body>
+</html>
