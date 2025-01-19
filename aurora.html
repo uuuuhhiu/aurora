@@ -7,236 +7,317 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url('0de0d6b7f8fab17d66c016ff641be9a5.webp') no-repeat center center/cover;
             font-family: Arial, sans-serif;
+            background-image: url('0de0d6b7f8fab17d66c016ff641be9a5.webp');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: white;
         }
 
-        .container {
+        .center-content {
             text-align: center;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: slideIn 2s ease-out;
         }
 
         h1 {
             font-size: 3rem;
-            margin-bottom: 20px;
+            margin: 0;
+            padding: 20px;
         }
 
-        .join-button {
-            display: inline-block;
+        .join-btn {
             padding: 15px 30px;
             font-size: 1.2rem;
-            color: white;
-            background-color: #4CAF50;
+            background-color: #ff5e57;
             border: none;
-            border-radius: 5px;
-            text-decoration: none;
+            color: white;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
         }
 
-        .join-button:hover {
-            background-color: #45a049;
+        .join-btn:hover {
+            background-color: #ff3c2d;
         }
 
         .sidebar {
-            position: fixed;
-            top: 0;
+            position: absolute;
             left: -250px;
+            top: 0;
             width: 250px;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
+            background-color: #333;
+            padding: 20px;
             transition: left 0.3s;
-            z-index: 1000;
+        }
+
+        .sidebar a {
             color: white;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar ul li {
-            padding: 15px 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .sidebar ul li:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .menu-toggle {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
-            color: black; /* Set the color to black */
-            cursor: pointer;
-            z-index: 1100;
-        }
-
-        .widget-container, .ratings-container {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.9);
-            color: white;
-        }
-
-        .widget-container iframe {
-            margin-top: 20px;
-        }
-
-        .ratings-form {
-            margin-top: 20px;
-        }
-
-        .ratings-form select, .ratings-form textarea, .ratings-form button {
-            margin: 10px 0;
-        }
-
-        .ratings-list {
-            margin-top: 20px;
-        }
-
-        .rating {
-            margin-bottom: 10px;
+            display: block;
             padding: 10px;
-            border: 1px solid #4CAF50;
+            text-decoration: none;
+            margin-bottom: 10px;
             border-radius: 5px;
-            background: rgba(0, 0, 0, 0.8);
+            transition: background-color 0.3s;
         }
 
-        .rating img {
-            width: 50px;
-            height: 50px;
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+
+        .sidebar .sections {
+            margin-bottom: 20px;
+        }
+
+        .sidebar-toggle {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: white;
+            background: #333;
+            padding: 10px;
             border-radius: 50%;
-            margin-right: 10px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .form-section, .rate-form-section {
+            margin-top: 20px;
+        }
+
+        .form-section input, .form-section textarea, .form-section select,
+        .rate-form-section input, .rate-form-section textarea, .rate-form-section select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #222;
+            color: white;
+        }
+
+        .form-section textarea, .rate-form-section textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .appeal-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .admin-support-section {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .admin-support-profile {
+            margin-bottom: 20px;
+        }
+
+        .admin-support-profile img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+
+        .admin-support-profile h3 {
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+
+        .admin-support-profile p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="menu-toggle" onclick="toggleSidebar()">&#9776;</div>
-    <div class="sidebar" id="sidebar">
-        <h2>Menu</h2>
-        <ul>
-            <li onclick="showRatings()">Ratings</li>
-            <li onclick="showWidget()">Widget</li>
-            <li onclick="alert('Admin Support Section')">Admin Support</li>
-        </ul>
+
+    <div class="center-content">
+        <h1>Aurora VIP ⭐ | fisch</h1>
+        <a href="https://discord.gg/ZNrzQd3URH" target="_blank">
+            <button class="join-btn">Join Now</button>
+        </a>
     </div>
-    <div class="container" id="main-container">
-        <h1>Welcome to Aurora VIP</h1>
-        <a class="join-button" href="https://discord.gg/ZNrzQd3URH" target="_blank">Join</a>
-    </div>
-    <div class="widget-container" id="widget-container">
-        <h1>Widget Section</h1>
-        <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-    </div>
-    <div class="ratings-container" id="ratings-container">
-        <h1>Ratings Section</h1>
-        <div class="ratings-form">
-            <form id="rating-form" onsubmit="submitRating(event)">
-                <select id="rating-stars" required>
-                    <option value="">Select Rating</option>
-                    <option value="1">⭐</option>
-                    <option value="2">⭐⭐</option>
-                    <option value="3">⭐⭐⭐</option>
-                    <option value="4">⭐⭐⭐⭐</option>
-                    <option value="5">⭐⭐⭐⭐⭐</option>
-                </select>
-                <textarea id="rating-text" placeholder="Write your review here..." required></textarea>
-                <button type="submit">Submit Rating</button>
-            </form>
+
+    <div class="sidebar">
+        <div class="sections">
+            <h3>Widget</h3>
+            <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            <a href="#">Admin Support</a>
+            <a href="#">Rate Us</a>
         </div>
-        <div class="ratings-list" id="ratings-list">
-            <!-- Ratings will be dynamically loaded here -->
+        <div class="sections">
+            <h3>Appeal</h3>
+            <p>Join Aurora VIP to appeal</p>
+            <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
+                <button class="join-btn">Join Aurora VIP</button>
+            </a>
+            <a href="#">Shop</a>
+        </div>
+    </div>
+
+    <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
+
+    <!-- Admin Support Section -->
+    <div class="admin-support-section">
+        <h2>Admin Support</h2>
+
+        <!-- 2K Profile -->
+        <div class="admin-support-profile">
+            <img src="https://cdn.discordapp.com/avatars/1080940869902925998/a_3013460937f9181e699064f1aad2bc2c.gif?size=1024" alt="2K">
+            <h3>Owner</h3>
+            <p>The End of Times</p>
+        </div>
+
+        <!-- The End of Times Profile -->
+        <div class="admin-support-profile">
+            <img src="https://cdn.discordapp.com/avatars/948168624059875369/814d27c453abca2fe6f827a560aad06e.png?size=1024" alt="The End of Times">
+            <h3>Co-Owner</h3>
+            <p>White Hand</p>
+        </div>
+
+        <!-- Bravinch Profile -->
+        <div class="admin-support-profile">
+            <img src="https://cdn.discordapp.com/avatars/1312757012781862973/2836a8266a4e5bf4d44bd15a50b47577.png?size=1024" alt="Bravinch">
+            <h3>Admin Chef</h3>
+            <p>Bravinch</p>
+        </div>
+
+        <!-- Dev_Teq Profile -->
+        <div class="admin-support-profile">
+            <img src="https://images-ext-1.discordapp.net/external/IJNH0xaqkLz8b6MTdH8WOaQ-wVklQGBzj1Ez-rJItOA/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1118859033814769765/30e1dc767ceccd035026aba58dba62b9.png?format=webp&quality=lossless&width=644&height=644" alt="Dev_Teq">
+            <h3>Admin</h3>
+            <p>Dev_Teq</p>
+        </div>
+
+        <!-- Lord Profile -->
+        <div class="admin-support-profile">
+            <img src="https://cdn.discordapp.com/avatars/1118859033814769765/30e1dc767ceccd035026aba58dba62b9.png?size=1024" alt="Lord">
+            <h3>Lord</h3>
+            <p>Lord</p>
         </div>
     </div>
 
     <script>
-        const backendUrl = 'https://auroravip.onrender.com/aurora.html'; // Update with your backend URL
-
         function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            sidebar.classList.toggle('open');
+            const sidebar = document.querySelector('.sidebar');
+            if (sidebar.style.left === '0px') {
+                sidebar.style.left = '-250px';
+            } else {
+                sidebar.style.left = '0px';
+            }
         }
 
-        function showWidget() {
-            document.getElementById('main-container').style.display = 'none';
-            document.getElementById('ratings-container').style.display = 'none';
-            document.getElementById('widget-container').style.display = 'flex';
-        }
-
-        function showRatings() {
-            document.getElementById('main-container').style.display = 'none';
-            document.getElementById('widget-container').style.display = 'none';
-            document.getElementById('ratings-container').style.display = 'flex';
-            loadRatings();  // Load the ratings when the page is first loaded
-        }
-
-        async function submitRating(event) {
+        // Handle Apply Form submission
+        document.getElementById('applyForm').addEventListener('submit', function (event) {
             event.preventDefault();
-            const stars = document.getElementById('rating-stars').value;
-            const text = document.getElementById('rating-text').value;
 
-            const response = await fetch(`${backendUrl}/submit-rating`, {
+            const username = event.target.username.value;
+            const joindate = event.target.joindate.value;
+            const role = event.target.role.value;
+            const reason = event.target.reason.value;
+
+            const applicationData = {
+                username: username,
+                joindate: joindate,
+                role: role,
+                reason: reason
+            };
+
+            // Send data to Discord webhook
+            fetch('https://discord.com/api/webhooks/1330651120435200050/uGNZuF_MmIzKM3CdAcluZupTlibfsEO9-T-7dFrLpYM5VImM_fqq4yFe5yi6bjr28Sxu', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ stars, text }),
-                credentials: 'include',
+                body: JSON.stringify({
+                    content: null,
+                    embeds: [{
+                        title: 'New Application',
+                        description: `**Username**: ${applicationData.username}\n**Join Date**: ${applicationData.joindate}\n**Role Applied For**: ${applicationData.role}\n**Reason**: ${applicationData.reason}`,
+                        color: 3066993 // Green color for the embed
+                    }]
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Your application has been submitted!');
+                } else {
+                    alert('There was an error submitting your application.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your application.');
             });
+        });
 
-            if (response.ok) {
-                alert('Rating submitted successfully!');
-                loadRatings();  // Refresh the ratings list after submitting a new rating
-            } else {
-                alert('Failed to submit rating. Please try again.');
-            }
-        }
+        // Handle Rate Us Form submission
+        document.getElementById('rateForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        async function loadRatings() {
-            const response = await fetch(`${backendUrl}/ratings`, {
-                method: 'GET',
+            const username = event.target.username.value;
+            const feedback = event.target.feedback.value;
+            const rating = event.target.rating.value;
+
+            const feedbackData = {
+                username: username,
+                feedback: feedback,
+                rating: rating
+            };
+
+            // Send data to Discord webhook
+            fetch('https://discord.com/api/webhooks/1330651033176637470/_SHyLMb2n8ZLx2JUwmttGJJleB0-KXVII_eb_-SkObdACu-v4gf8OPZbOFbORHHVyORh', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: null,
+                    embeds: [{
+                        title: 'New Feedback',
+                        description: `**Username**: ${feedbackData.username}\n**Feedback**: ${feedbackData.feedback}\n**Rating**: ${feedbackData.rating} Stars`,
+                        color: 3066993 // Green color for the embed
+                    }]
+                })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Your feedback has been submitted!');
+                } else {
+                    alert('There was an error submitting your feedback.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your feedback.');
             });
-            const ratings = await response.json();
-            const ratingList = document.getElementById('ratings-list');
-            ratingList.innerHTML = '';  // Clear the existing list
-
-            if (ratings.length > 0) {
-                ratings.forEach(rating => {
-                    const ratingDiv = document.createElement('div');
-                    ratingDiv.className = 'rating';
-                    ratingDiv.innerHTML = `<img src="${rating.avatar}" alt="Avatar"> <p>${rating.stars} - ${rating.text}</p>`;
-                    ratingList.appendChild(ratingDiv);
-                });
-            } else {
-                ratingList.innerHTML = '<p>No ratings yet.</p>';
-            }
-        }
+        });
     </script>
+
 </body>
 </html>
