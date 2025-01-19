@@ -50,7 +50,17 @@
         }
 
         .sidebar-toggle {
-            display: none;
+            display: block;
+            font-size: 2rem;
+            color: white;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
         }
 
         /* Centering content */
@@ -60,10 +70,12 @@
             max-width: 800px;
             width: 100%;
             z-index: 10;
+            position: relative;
         }
 
-        h1 {
-            font-size: 2.5rem;
+        .main-content h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
         }
 
         .join-btn {
@@ -75,7 +87,6 @@
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 20px;
         }
 
         .join-btn:hover {
@@ -90,74 +101,63 @@
             margin-top: 20px;
         }
 
-        /* Sidebar toggle button for small screens */
-        .sidebar-toggle {
-            display: block;
-            font-size: 2rem;
-            color: white;
-            background-color: #333;
-            padding: 10px;
+        /* Admin support horizontal layout */
+        .admin-support {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .admin-support .admin {
+            text-align: center;
+        }
+
+        .admin img {
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            cursor: pointer;
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 9999;
+            margin-bottom: 10px;
+        }
+
+        .admin h3 {
+            margin: 0;
+            font-size: 1.2rem;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .sidebar {
-                left: -250px;
-                width: 100%;
-                height: auto;
-                position: absolute;
-                top: 0;
-                padding: 10px;
+            iframe {
+                width: 250px;
+                height: 350px;
             }
 
-            .sidebar.open {
-                left: 0;
-            }
-
-            .main-content {
-                margin-left: 0;
-                text-align: center;
-            }
-
-            .sidebar-toggle {
-                display: block;
+            .main-content h1 {
                 font-size: 2rem;
-                color: white;
-                background-color: #333;
-                padding: 10px;
-                border-radius: 50%;
-                cursor: pointer;
-                position: absolute;
-                top: 20px;
-                left: 20px;
-                z-index: 9999;
+            }
+
+            .join-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-        <div class="sections">
-            <h3>Sections</h3>
-            <a href="javascript:void(0)" onclick="showSection('home-section')">Home</a>
-            <a href="javascript:void(0)" onclick="showSection('widget-section')">Widget</a>
-            <a href="javascript:void(0)" onclick="showSection('admin-support-section')">Admin Support</a>
-            <a href="javascript:void(0)" onclick="showSection('rate-us-section')">Rate Us</a>
-            <a href="javascript:void(0)" onclick="showSection('appeal-section')">Appeal</a>
-            <a href="javascript:void(0)" onclick="showSection('apply-section')">Apply</a>
-        </div>
+        <h3>Sections</h3>
+        <a href="javascript:void(0)" onclick="showSection('home-section')">Home</a>
+        <a href="javascript:void(0)" onclick="showSection('widget-section')">Widget</a>
+        <a href="javascript:void(0)" onclick="showSection('admin-support-section')">Admin Support</a>
     </div>
 
     <!-- Sidebar toggle button -->
     <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
 
+    <!-- Main Content -->
     <div class="main-content">
         <!-- Home Section -->
         <div id="home-section" class="section">
@@ -176,49 +176,40 @@
         <!-- Admin Support Section -->
         <div id="admin-support-section" class="section" style="display: none;">
             <h2>Admin Support</h2>
-            <!-- Your admin support content here -->
-        </div>
-
-        <!-- Rate Us Section -->
-        <div id="rate-us-section" class="section" style="display: none;">
-            <h2>Rate Us</h2>
-            <!-- Your rate us content here -->
-        </div>
-
-        <!-- Appeal Section -->
-        <div id="appeal-section" class="section" style="display: none;">
-            <h2>Appeal</h2>
-            <p>Join Aurora VIP to appeal</p>
-            <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
-                <button class="join-btn">Join Aurora VIP</button>
-            </a>
-        </div>
-
-        <!-- Apply Section -->
-        <div id="apply-section" class="section" style="display: none;">
-            <h2>Apply for a Role</h2>
-            <!-- Your apply content here -->
+            <div class="admin-support">
+                <div class="admin">
+                    <img src="admin1.jpg" alt="Admin 1">
+                    <h3>Admin 1</h3>
+                </div>
+                <div class="admin">
+                    <img src="admin2.jpg" alt="Admin 2">
+                    <h3>Admin 2</h3>
+                </div>
+                <div class="admin">
+                    <img src="admin3.jpg" alt="Admin 3">
+                    <h3>Admin 3</h3>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Toggle sidebar open/close
+        // Toggle sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
         }
 
-        // Show specific section when clicked in the sidebar
+        // Show specific section
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => {
                 section.style.display = 'none'; // Hide all sections
             });
-
             document.getElementById(sectionId).style.display = 'block'; // Show selected section
         }
 
-        // Default to show the home section
+        // Default to home section
         showSection('home-section');
     </script>
 
