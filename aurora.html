@@ -13,6 +13,7 @@
             background-position: center;
             height: 100vh;
             color: white;
+            overflow: hidden;
         }
 
         .center-content {
@@ -47,7 +48,7 @@
         }
 
         .sidebar {
-            position: absolute;
+            position: fixed;
             left: -250px;
             top: 0;
             width: 250px;
@@ -55,6 +56,7 @@
             background-color: #333;
             padding: 20px;
             transition: left 0.3s;
+            z-index: 999;
         }
 
         .sidebar a {
@@ -95,8 +97,10 @@
             border-radius: 10px;
         }
 
-        .form-section, .rate-form-section {
-            margin-top: 20px;
+        .section {
+            display: none;
+            padding: 20px;
+            margin-left: 250px;
         }
 
         .form-section input, .form-section textarea, .form-section select,
@@ -169,61 +173,97 @@
 
     <div class="sidebar">
         <div class="sections">
-            <h3>Widget</h3>
-            <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-            <a href="#">Admin Support</a>
-            <a href="#">Rate Us</a>
-        </div>
-        <div class="sections">
-            <h3>Appeal</h3>
-            <p>Join Aurora VIP to appeal</p>
-            <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
-                <button class="join-btn">Join Aurora VIP</button>
-            </a>
-            <a href="#">Shop</a>
+            <h3>Sections</h3>
+            <a href="javascript:void(0)" onclick="showSection('widget-section')">Widget</a>
+            <a href="javascript:void(0)" onclick="showSection('admin-support-section')">Admin Support</a>
+            <a href="javascript:void(0)" onclick="showSection('rate-us-section')">Rate Us</a>
+            <a href="javascript:void(0)" onclick="showSection('appeal-section')">Appeal</a>
+            <a href="javascript:void(0)" onclick="showSection('apply-section')">Apply</a>
         </div>
     </div>
 
     <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
 
-    <!-- Admin Support Section -->
-    <div class="admin-support-section">
-        <h2>Admin Support</h2>
+    <!-- Widget Section -->
+    <div id="widget-section" class="section">
+        <h2>Widget</h2>
+        <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+    </div>
 
-        <!-- 2K Profile -->
+    <!-- Admin Support Section -->
+    <div id="admin-support-section" class="section admin-support-section">
+        <h2>Admin Support</h2>
         <div class="admin-support-profile">
             <img src="https://cdn.discordapp.com/avatars/1080940869902925998/a_3013460937f9181e699064f1aad2bc2c.gif?size=1024" alt="2K">
             <h3>Owner</h3>
             <p>The End of Times</p>
         </div>
-
-        <!-- The End of Times Profile -->
         <div class="admin-support-profile">
             <img src="https://cdn.discordapp.com/avatars/948168624059875369/814d27c453abca2fe6f827a560aad06e.png?size=1024" alt="The End of Times">
             <h3>Co-Owner</h3>
             <p>White Hand</p>
         </div>
-
-        <!-- Bravinch Profile -->
         <div class="admin-support-profile">
             <img src="https://cdn.discordapp.com/avatars/1312757012781862973/2836a8266a4e5bf4d44bd15a50b47577.png?size=1024" alt="Bravinch">
             <h3>Admin Chef</h3>
             <p>Bravinch</p>
         </div>
-
-        <!-- Dev_Teq Profile -->
         <div class="admin-support-profile">
             <img src="https://images-ext-1.discordapp.net/external/IJNH0xaqkLz8b6MTdH8WOaQ-wVklQGBzj1Ez-rJItOA/%3Fsize%3D4096/https/cdn.discordapp.com/avatars/1118859033814769765/30e1dc767ceccd035026aba58dba62b9.png?format=webp&quality=lossless&width=644&height=644" alt="Dev_Teq">
             <h3>Admin</h3>
             <p>Dev_Teq</p>
         </div>
-
-        <!-- Lord Profile -->
         <div class="admin-support-profile">
             <img src="https://cdn.discordapp.com/avatars/1118859033814769765/30e1dc767ceccd035026aba58dba62b9.png?size=1024" alt="Lord">
             <h3>Lord</h3>
             <p>Lord</p>
         </div>
+    </div>
+
+    <!-- Rate Us Section -->
+    <div id="rate-us-section" class="section rate-us-section">
+        <h2>Rate Us</h2>
+        <form id="rateForm">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <textarea name="feedback" placeholder="Your feedback" required></textarea><br>
+            <select name="rating">
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select><br>
+            <button type="submit" class="join-btn">Submit Feedback</button>
+        </form>
+    </div>
+
+    <!-- Appeal Section -->
+    <div id="appeal-section" class="section appeal-section">
+        <h2>Appeal</h2>
+        <p>Join Aurora VIP to appeal</p>
+        <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
+            <button class="join-btn">Join Aurora VIP</button>
+        </a>
+    </div>
+
+    <!-- Apply Section -->
+    <div id="apply-section" class="section apply-section">
+        <h2>Apply for a Role</h2>
+        <form id="applyForm">
+            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="text" name="joindate" placeholder="Join Date of Server" required><br>
+            <select name="role" required>
+                <option value="Mod">Mod</option>
+                <option value="Admin">Admin</option>
+                <option value="Partner Manager">Partner Manager</option>
+                <option value="Aurora Hoster">Aurora Hoster</option>
+                <option value="Giveaway Maker">Giveaway Maker</option>
+                <option value="Mod 2">Mod 2</option>
+                <option value="Middleman">Middleman</option>
+            </select><br>
+            <textarea name="reason" placeholder="Why do you want to be an admin? (at least 250 characters)" required></textarea><br>
+            <button type="submit" class="join-btn">Apply Now</button>
+        </form>
     </div>
 
     <script>
@@ -236,87 +276,17 @@
             }
         }
 
-        // Handle Apply Form submission
-        document.getElementById('applyForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const username = event.target.username.value;
-            const joindate = event.target.joindate.value;
-            const role = event.target.role.value;
-            const reason = event.target.reason.value;
-
-            const applicationData = {
-                username: username,
-                joindate: joindate,
-                role: role,
-                reason: reason
-            };
-
-            // Send data to Discord webhook
-            fetch('https://discord.com/api/webhooks/1330651120435200050/uGNZuF_MmIzKM3CdAcluZupTlibfsEO9-T-7dFrLpYM5VImM_fqq4yFe5yi6bjr28Sxu', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    content: null,
-                    embeds: [{
-                        title: 'New Application',
-                        description: `**Username**: ${applicationData.username}\n**Join Date**: ${applicationData.joindate}\n**Role Applied For**: ${applicationData.role}\n**Reason**: ${applicationData.reason}`,
-                        color: 3066993 // Green color for the embed
-                    }]
-                })
-            }).then(response => {
-                if (response.ok) {
-                    alert('Your application has been submitted!');
-                } else {
-                    alert('There was an error submitting your application.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('There was an error submitting your application.');
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.display = 'none';
             });
-        });
 
-        // Handle Rate Us Form submission
-        document.getElementById('rateForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+            document.getElementById(sectionId).style.display = 'block';
+        }
 
-            const username = event.target.username.value;
-            const feedback = event.target.feedback.value;
-            const rating = event.target.rating.value;
-
-            const feedbackData = {
-                username: username,
-                feedback: feedback,
-                rating: rating
-            };
-
-            // Send data to Discord webhook
-            fetch('https://discord.com/api/webhooks/1330651033176637470/_SHyLMb2n8ZLx2JUwmttGJJleB0-KXVII_eb_-SkObdACu-v4gf8OPZbOFbORHHVyORh', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    content: null,
-                    embeds: [{
-                        title: 'New Feedback',
-                        description: `**Username**: ${feedbackData.username}\n**Feedback**: ${feedbackData.feedback}\n**Rating**: ${feedbackData.rating} Stars`,
-                        color: 3066993 // Green color for the embed
-                    }]
-                })
-            }).then(response => {
-                if (response.ok) {
-                    alert('Your feedback has been submitted!');
-                } else {
-                    alert('There was an error submitting your feedback.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('There was an error submitting your feedback.');
-            });
-        });
+        // Default show widget section
+        showSection('widget-section');
     </script>
 
 </body>
