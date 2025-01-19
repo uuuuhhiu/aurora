@@ -14,19 +14,25 @@
             height: 100vh;
             color: white;
             overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .sidebar {
             position: fixed;
             top: 0;
-            left: 0;
+            left: -250px; /* Initially hidden */
             width: 250px;
             background-color: #333;
+            height: 100%;
             padding: 20px;
             z-index: 1000;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+            transition: left 0.3s ease;
+        }
+
+        .sidebar.open {
+            left: 0;
         }
 
         .sidebar a {
@@ -43,20 +49,21 @@
             background-color: #575757;
         }
 
-        .sections {
-            margin-bottom: 20px;
-        }
-
-        .section {
+        .sidebar-toggle {
             display: none;
-            padding: 20px;
-            margin-left: 250px;
         }
 
-        .home-section {
-            display: block;
+        /* Centering content */
+        .main-content {
             text-align: center;
-            margin-top: 100px;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 2.5rem;
         }
 
         .join-btn {
@@ -76,14 +83,26 @@
         }
 
         iframe {
-            width: 100%;
+            width: 300px; /* Smaller size */
+            height: 400px; /* Smaller height */
             border: none;
             border-radius: 10px;
+            margin-top: 20px;
         }
 
         /* Sidebar toggle button for small screens */
         .sidebar-toggle {
-            display: none;
+            display: block;
+            font-size: 2rem;
+            color: white;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
         }
 
         /* Responsive Design */
@@ -95,11 +114,15 @@
                 position: absolute;
                 top: 0;
                 padding: 10px;
-                transition: left 0.3s ease;
             }
 
             .sidebar.open {
                 left: 0;
+            }
+
+            .main-content {
+                margin-left: 0;
+                text-align: center;
             }
 
             .sidebar-toggle {
@@ -115,16 +138,12 @@
                 left: 20px;
                 z-index: 9999;
             }
-
-            .section {
-                margin-left: 0;
-            }
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sections">
             <h3>Sections</h3>
             <a href="javascript:void(0)" onclick="showSection('home-section')">Home</a>
@@ -136,62 +155,67 @@
         </div>
     </div>
 
+    <!-- Sidebar toggle button -->
     <div class="sidebar-toggle" onclick="toggleSidebar()">☰</div>
 
-    <!-- Home Section -->
-    <div id="home-section" class="section home-section">
-        <h1>Aurora VIP ⭐ | fisch</h1>
-        <a href="https://discord.gg/ZNrzQd3URH" target="_blank">
-            <button class="join-btn">Join Now</button>
-        </a>
-    </div>
+    <div class="main-content">
+        <!-- Home Section -->
+        <div id="home-section" class="section">
+            <h1>Aurora VIP ⭐ | fisch</h1>
+            <a href="https://discord.gg/ZNrzQd3URH" target="_blank">
+                <button class="join-btn">Join Now</button>
+            </a>
+        </div>
 
-    <!-- Widget Section -->
-    <div id="widget-section" class="section">
-        <h2>Widget</h2>
-        <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-    </div>
+        <!-- Widget Section -->
+        <div id="widget-section" class="section" style="display: none;">
+            <h2>Widget</h2>
+            <iframe src="https://discord.com/widget?id=1319649447122178090&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div>
 
-    <!-- Admin Support Section -->
-    <div id="admin-support-section" class="section">
-        <h2>Admin Support</h2>
-        <!-- Your admin support content here -->
-    </div>
+        <!-- Admin Support Section -->
+        <div id="admin-support-section" class="section" style="display: none;">
+            <h2>Admin Support</h2>
+            <!-- Your admin support content here -->
+        </div>
 
-    <!-- Rate Us Section -->
-    <div id="rate-us-section" class="section">
-        <h2>Rate Us</h2>
-        <!-- Your rate us content here -->
-    </div>
+        <!-- Rate Us Section -->
+        <div id="rate-us-section" class="section" style="display: none;">
+            <h2>Rate Us</h2>
+            <!-- Your rate us content here -->
+        </div>
 
-    <!-- Appeal Section -->
-    <div id="appeal-section" class="section">
-        <h2>Appeal</h2>
-        <p>Join Aurora VIP to appeal</p>
-        <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
-            <button class="join-btn">Join Aurora VIP</button>
-        </a>
-    </div>
+        <!-- Appeal Section -->
+        <div id="appeal-section" class="section" style="display: none;">
+            <h2>Appeal</h2>
+            <p>Join Aurora VIP to appeal</p>
+            <a href="https://discord.gg/5BSdCZzFgA" target="_blank">
+                <button class="join-btn">Join Aurora VIP</button>
+            </a>
+        </div>
 
-    <!-- Apply Section -->
-    <div id="apply-section" class="section">
-        <h2>Apply for a Role</h2>
-        <!-- Your apply content here -->
+        <!-- Apply Section -->
+        <div id="apply-section" class="section" style="display: none;">
+            <h2>Apply for a Role</h2>
+            <!-- Your apply content here -->
+        </div>
     </div>
 
     <script>
+        // Toggle sidebar open/close
         function toggleSidebar() {
-            const sidebar = document.querySelector('.sidebar');
+            const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('open');
         }
 
+        // Show specific section when clicked in the sidebar
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => {
-                section.style.display = 'none';
+                section.style.display = 'none'; // Hide all sections
             });
 
-            document.getElementById(sectionId).style.display = 'block';
+            document.getElementById(sectionId).style.display = 'block'; // Show selected section
         }
 
         // Default to show the home section
